@@ -118,6 +118,13 @@ test('brand header keeps one straight word with the animated shimmer layered ove
   assert.equal((appEntry.match(/brandHeaderTitle}>حمزاوي سات/g) || []).length, 1, 'header should contain exactly one brand word');
 });
 
+test('Hamzawy Sat app branding preserves the installed Android package identity', () => {
+  const config = JSON.parse(fs.readFileSync(path.join(root, 'app.json'), 'utf8'));
+  assert.equal(config.expo.name, 'حمزاوي سات');
+  assert.equal(config.expo.slug, 'sonaa');
+  assert.equal(config.expo.android.package, 'com.sonaa.app');
+});
+
 test('startup splash stays visible until saved account restoration finishes', () => {
   const appEntry = fs.readFileSync(path.join(root, 'App.js'), 'utf8');
   const screens = fs.readFileSync(path.join(root, 'src/screens/AppScreens.js'), 'utf8');
