@@ -41,7 +41,7 @@ export function AdminDashboard({
 
   return <SafeAreaView style={styles.adminSafe}>
     <View style={styles.headerRow}>
-      <View style={styles.flex}><Text style={styles.title}>لوحة إدارة صُنّاع</Text><Text style={styles.subtitleSmall}>أهلًا {session.user?.name || 'بالإدارة'}</Text></View>
+      <View style={styles.flex}><Text style={styles.title}>لوحة إدارة حمزاوي سات</Text><Text style={styles.subtitleSmall}>أهلًا {session.user?.name || 'بالإدارة'}</Text></View>
       <Button title="حسابي" secondary onPress={() => setScreen('account')} />
       <Button title="خروج" secondary onPress={logout} />
     </View>

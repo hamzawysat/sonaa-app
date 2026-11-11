@@ -72,7 +72,7 @@ export function useAppState() {
   const ratingHandledRef = useRef(new Set());
   const ratingStatusSnapshotRef = useRef({ client: {}, fanni: {} });
   const [adminUsers, setAdminUsers] = useState([]);
-  const [adminExtras, setAdminExtras] = useState({ services: [], regions: [], pricing: { check: 0, commission: 0, minOffer: 1, maxOffer: 1000000 }, pricingHistory: [], settings: { siteName: 'صُنّاع', maintenance: false, maintenanceMessage: '', maxFanniSignupAttempts: 5 }, content: { announcement: '', faqs: [] }, auditLogs: [], report: null, loading: false, error: '' });
+  const [adminExtras, setAdminExtras] = useState({ services: [], regions: [], pricing: { check: 0, commission: 0, minOffer: 1, maxOffer: 1000000 }, pricingHistory: [], settings: { siteName: 'حمزاوي سات', maintenance: false, maintenanceMessage: '', maxFanniSignupAttempts: 5 }, content: { announcement: '', faqs: [] }, auditLogs: [], report: null, loading: false, error: '' });
   const [adminServiceDraft, setAdminServiceDraft] = useState({ name: '', category: 'خدمات أخرى', emoji: '🔧' });
   const [adminServiceEdit, setAdminServiceEdit] = useState({ category: '', oldName: '', name: '' });
   const [adminRegionDraft, setAdminRegionDraft] = useState('');

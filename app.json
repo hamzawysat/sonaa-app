@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "sonaa",
+    "name": "حمزاوي سات",
     "slug": "sonaa",
     "version": "1.0.12",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/LOGO_UPLOAD_HERE/logo.png",
     "platforms": [
       "android"
     ],
@@ -13,8 +13,8 @@
       "versionCode": 13,
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#F4F8FC"
+        "foregroundImage": "./assets/LOGO_UPLOAD_HERE/logo.png",
+        "backgroundColor": "#F8F6F0"
       }
     },
     "extra": {
@@ -24,9 +24,9 @@
       }
     },
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/LOGO_UPLOAD_HERE/logo.png",
       "resizeMode": "contain",
-      "backgroundColor": "#F4F8FC"
+      "backgroundColor": "#F8F6F0"
     },
     "owner": "sonaa2030",
     "plugins": [
@@ -34,7 +34,7 @@
       [
         "expo-av",
         {
-          "microphonePermission": "السماح لصُنّاع بتسجيل وصف الطلب الصوتي."
+          "microphonePermission": "السماح لحمزاوي سات بتسجيل وصف الطلب الصوتي."
         }
       ],
       [
@@ -46,7 +46,6 @@
           }
         }
       ]
-    ],
-    "jsEngine": "hermes"
+    ]
   }
 }

@@ -36,6 +36,8 @@ jobs:
           java-version: '17'
       - name: Install dependencies
         run: npm install --legacy-peer-deps
+      - name: Run app regression tests
+        run: npm test
       - name: Generate app icons and splash from official logo
         run: |
           python3 -m pip install --quiet Pillow

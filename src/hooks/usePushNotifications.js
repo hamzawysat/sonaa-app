@@ -31,7 +31,7 @@ useEffect(() => {
         }
         if (Platform.OS === 'android') {
           await Notifications.setNotificationChannelAsync('default', {
-            name: 'إشعارات صُنّاع',
+            name: 'إشعارات حمزاوي سات',
             importance: Notifications.AndroidImportance.MAX,
             vibrationPattern: [0, 250, 250, 250],
             lightColor: COLORS.teal500,

@@ -111,11 +111,18 @@ test('rating modal and rating submission safely handle missing technician order 
 
 test('brand header keeps one straight word with the animated shimmer layered over it', () => {
   const appEntry = fs.readFileSync(path.join(root, 'App.js'), 'utf8');
-  assert.ok(appEntry.includes('<Text style={styles.brandHeaderTitle}>صُنّاع</Text>'), 'brand word should be rendered once as native text');
+  assert.ok(appEntry.includes('<Text style={styles.brandHeaderTitle}>حمزاوي سات</Text>'), 'brand word should be rendered once as native text');
   assert.ok(appEntry.includes('Animated.View pointerEvents="none" style={[styles.brandHeaderShimmer'), 'shimmer should be an overlay, not another text layer');
   assert.ok(appEntry.includes('<LinearGradient colors={['), 'the shine gradient should remain animated over the word');
   assert.ok(!appEntry.includes('react-native-svg'), 'the SVG mask that caused duplicate glyph rendering should not be used');
-  assert.equal((appEntry.match(/brandHeaderTitle}>صُنّاع/g) || []).length, 1, 'header should contain exactly one brand word');
+  assert.equal((appEntry.match(/brandHeaderTitle}>حمزاوي سات/g) || []).length, 1, 'header should contain exactly one brand word');
+});
+
+test('Hamzawy Sat app branding preserves the installed Android package identity', () => {
+  const config = JSON.parse(fs.readFileSync(path.join(root, 'app.json'), 'utf8'));
+  assert.equal(config.expo.name, 'حمزاوي سات');
+  assert.equal(config.expo.slug, 'sonaa');
+  assert.equal(config.expo.android.package, 'com.sonaa.app');
 });
 
 test('startup splash stays visible until saved account restoration finishes', () => {
@@ -126,15 +133,15 @@ test('startup splash stays visible until saved account restoration finishes', ()
   assert.ok(screens.includes('onAuthRestoringChange?.(authRestoring)'), 'screen should report when saved account restoration completes');
 });
 
-test('Sonaa splash removes the spinning letter and swings the logo like a pendulum', () => {
+test('Hamzawy Sat splash removes the spinning letter and swings the logo like a pendulum', () => {
   assert.ok(app.includes("const logoRotation = spin.interpolate({ inputRange: [0, 1], outputRange: ['-18deg', '18deg'] })"), 'logo should interpolate between left and right angles');
   assert.ok(app.includes('<Animated.Image source={require("./assets/LOGO_UPLOAD_HERE/logo.png")} style={[splashStyles.logo, { transform: [{ rotate: logoRotation }] }]} resizeMode="contain" />'), 'the logo image itself should rotate');
   assert.ok(!app.includes('spinningLetter'), 'the separate spinning letter should be removed');
   assert.ok(!app.includes('<Animated.Text'), 'the splash should not animate a separate text letter');
-  assert.ok(app.includes('<Text style={splashStyles.title}>صُنّاع</Text>'), 'the main brand word should remain static');
+  assert.ok(app.includes('<Text style={splashStyles.title}>حمزاوي سات</Text>'), 'the main brand word should remain static');
   assert.ok(app.includes('<Text style={splashStyles.caption}>كل خدمة تبدأ بخطوة</Text>'), 'splash caption should use the agreed tagline');
   assert.ok(app.includes('<Text style={styles.homeTaglinePremium}>كُلُّ خِدْمَةٍ تَبْدَأُ بِخُطْوَةٍ</Text>'), 'home tagline should retain the premium home design');
-  assert.ok(!app.includes('صُنّاع — كل خدمة تبدأ بخطوة'), 'login should not receive the splash-only tagline');
+  assert.ok(!app.includes('حمزاوي سات — كل خدمة تبدأ بخطوة'), 'login should not receive the splash-only tagline');
   assert.ok(!app.includes('<Text style={styles.subtitle}>كل خدمة تبدأ بخطوة</Text>'), 'technician screen should not receive the splash-only tagline');
 });
 
@@ -542,4 +549,17 @@ test('client area selection hides the search field, reveals the detailed address
 test('technician dashboard opens on the opportunities tab by default', () => {
   const state = fs.readFileSync(path.join(root, 'src/hooks/useAppState.js'), 'utf8');
   assert.match(state, /tab: 'available'/);
+});
+
+test('Hamzawy Sat client and technician refresh controls use black-and-gold branding', () => {
+  const client = fs.readFileSync(path.join(root, 'src/screens/client/ClientDashboard.js'), 'utf8');
+  const technician = fs.readFileSync(path.join(root, 'src/screens/technician/TechnicianDashboard.js'), 'utf8');
+  const startup = fs.readFileSync(path.join(root, 'src/components/StartupErrorBoundary.js'), 'utf8');
+  for (const screen of [client, technician]) {
+    assert.ok(screen.includes("colors={['#C9A34F', '#8A6724']}"), 'refresh button must use the gold brand gradient');
+    assert.ok(!screen.includes('#2563EB') && !screen.includes('#0B1B3A'), 'legacy blue refresh colors must be absent');
+  }
+  assert.ok(startup.includes("backgroundColor: '#F8F6F0'"), 'startup error screen must use the Hamzawy Sat cream background');
+  assert.ok(startup.includes("backgroundColor: '#A9822E'"), 'startup retry button must use the gold brand');
+  assert.ok(!startup.includes('#F5F7FF') && !startup.includes('#172554'), 'legacy blue startup colors must be absent');
 });

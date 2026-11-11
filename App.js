@@ -51,9 +51,9 @@ function AppContent() {
         {headerInitial ? <View style={styles.brandHeaderAvatar}><Text style={styles.brandHeaderAvatarText}>{headerInitial}</Text></View> : null}
         <Image source={require("./assets/LOGO_UPLOAD_HERE/logo.png")} style={styles.brandHeaderLogo} resizeMode="contain" />
         <View style={styles.brandHeaderTitleWrap}>
-          <Text style={styles.brandHeaderTitle}>صُنّاع</Text>
+          <Text style={styles.brandHeaderTitle}>حمزاوي سات</Text>
           <Animated.View pointerEvents="none" style={[styles.brandHeaderShimmer, { transform: [{ translateX: shimmerTranslate }] }]}>
-            <LinearGradient colors={['transparent', 'rgba(255,255,255,0.95)', 'rgba(100,220,238,0.72)', 'transparent']} locations={[0, 0.42, 0.58, 1]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.brandHeaderShimmerGradient} />
+            <LinearGradient colors={['transparent', 'rgba(255,246,220,0.98)', 'rgba(201,163,79,0.82)', 'transparent']} locations={[0, 0.42, 0.58, 1]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.brandHeaderShimmerGradient} />
           </Animated.View>
         </View>
       </View>
@@ -63,7 +63,7 @@ function AppContent() {
       <View style={splashStyles.logoFrame}>
         <Animated.Image source={require("./assets/LOGO_UPLOAD_HERE/logo.png")} style={[splashStyles.logo, { transform: [{ rotate: logoRotation }] }]} resizeMode="contain" />
       </View>
-      <Text style={splashStyles.title}>صُنّاع</Text>
+      <Text style={splashStyles.title}>حمزاوي سات</Text>
       <Text style={splashStyles.caption}>كل خدمة تبدأ بخطوة</Text>
       <View style={splashStyles.loadingTrack}><View style={splashStyles.loadingFill} /></View>
     </View> : null}
