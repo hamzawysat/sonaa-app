@@ -52,9 +52,9 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
-private val Accent = Color(0xFF087F9C)
-private val DarkAccent = Color(0xFF07566B)
-private val Background = Color(0xFFF4F8FA)
+private val Accent = Color(0xFFC9A34F)
+private val DarkAccent = Color(0xFF171A22)
+private val Background = Color(0xFFF8F6F0)
 class MainActivity : ComponentActivity() {
     private var pendingDestination by mutableStateOf<String?>(null)
     private val askNotifications = registerForActivityResult(ActivityResultContracts.RequestPermission()) { }
@@ -80,8 +80,8 @@ class MainActivity : ComponentActivity() {
             MaterialTheme(
                 colorScheme = lightColorScheme(
                     primary = Accent,
-                    onPrimary = Color.White,
-                    secondary = Color(0xFF18A6A0),
+                    onPrimary = Color(0xFF171A22),
+                    secondary = Color(0xFFA9822E),
                     background = Background,
                     surface = Color.White,
                     error = Color(0xFFB3261E)
