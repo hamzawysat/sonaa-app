@@ -178,9 +178,9 @@ class MainActivity : ComponentActivity() {
                 onClick = vm::retry,
                 modifier = Modifier.size(42.dp),
                 shape = RoundedCornerShape(14.dp),
-                color = Color(0xFFE8F5F7),
+                color = Color(0xFFFAF7F0),
                 shadowElevation = 5.dp,
-                border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFC8E5E9))
+                border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFE8E0CF))
             ) { Box(contentAlignment = Alignment.Center) { Text("↻", color = Accent, fontWeight = FontWeight.Black, style = MaterialTheme.typography.headlineSmall) } }
             Spacer(Modifier.width(8.dp))
             Surface(
@@ -194,7 +194,7 @@ class MainActivity : ComponentActivity() {
         }
         if(state.section==AdminSection.ORDERS)state.voicePath?.let { path -> VoicePlayer(path) { } }
         state.actionMessage?.let { message ->
-            Card(Modifier.fillMaxWidth().padding(horizontal=12.dp, vertical=6.dp), colors=CardDefaults.cardColors(containerColor=Color(0xFFEAF6F8))) {
+            Card(Modifier.fillMaxWidth().padding(horizontal=12.dp, vertical=6.dp), colors=CardDefaults.cardColors(containerColor=Color(0xFFF8F6F0))) {
                 Text(message, modifier=Modifier.padding(10.dp), color=DarkAccent, maxLines=5)
             }
         }
@@ -205,9 +205,9 @@ class MainActivity : ComponentActivity() {
                 onClick = { sectionMenuExpanded = true },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(18.dp),
-                color = Color(0xFFF1F7FB),
+                color = Color(0xFFFAF7F0),
                 shadowElevation = 5.dp,
-                border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFD6E6F0))
+                border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFE8E0CF))
             ) {
                 Row(Modifier.padding(horizontal = 16.dp, vertical = 13.dp), verticalAlignment = Alignment.CenterVertically) {
                     Box(Modifier.size(38.dp).background(Accent, RoundedCornerShape(12.dp)), contentAlignment = Alignment.Center) {
@@ -227,10 +227,10 @@ class MainActivity : ComponentActivity() {
             ) {
                 readableSections.forEach { tab ->
                     DropdownMenuItem(
-                        text = { Text(tab.title, fontWeight = if (tab == state.section) FontWeight.ExtraBold else FontWeight.Medium, color = if (tab == state.section) Accent else Color(0xFF263746)) },
+                        text = { Text(tab.title, fontWeight = if (tab == state.section) FontWeight.ExtraBold else FontWeight.Medium, color = if (tab == state.section) Accent else Color(0xFF171A22)) },
                         leadingIcon = {
-                            Box(Modifier.size(34.dp).background(if (tab == state.section) Color(0xFFE1F4F7) else Color(0xFFF1F5F9), RoundedCornerShape(10.dp)), contentAlignment = Alignment.Center) {
-                                Text(sectionGlyph(tab), color = if (tab == state.section) Accent else Color(0xFF78909C), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Black)
+                            Box(Modifier.size(34.dp).background(if (tab == state.section) Color(0xFFF1E9D7) else Color(0xFFF8F6F0), RoundedCornerShape(10.dp)), contentAlignment = Alignment.Center) {
+                                Text(sectionGlyph(tab), color = if (tab == state.section) Accent else Color(0xFF77736A), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Black)
                             }
                         },
                         onClick = {
@@ -406,7 +406,7 @@ private fun canWriteApi(info:JsonElement?,path:String):Boolean{
    Text("التنفيذ يمنح القراءة تلقائيًا. الخادم يطبق الصلاحيات على كل طلب.",style=MaterialTheme.typography.bodySmall,color=Color.Gray)
    permissionSections.forEach{(key,label)->
     val current=permissions[key]?: (false to false)
-    Card(Modifier.fillMaxWidth(),colors=CardDefaults.cardColors(containerColor=Color(0xFFF4F8FA))){
+    Card(Modifier.fillMaxWidth(),colors=CardDefaults.cardColors(containerColor=Color(0xFFF8F6F0))){
      Column(Modifier.padding(horizontal=10.dp,vertical=5.dp)){
       Text(label,fontWeight=FontWeight.SemiBold)
       Row(verticalAlignment=Alignment.CenterVertically){
@@ -525,7 +525,7 @@ private fun canWriteApi(info:JsonElement?,path:String):Boolean{
        Text(labels[type]?:if(type.isBlank())"حركة مالية" else type,modifier=Modifier.weight(1f),fontWeight=FontWeight.ExtraBold,color=DarkAccent)
        Text("$amount ج.م",fontWeight=FontWeight.Black,color=if(amount.startsWith("-"))Color(0xFFB3261E) else Color(0xFF087F55))
       }
-      if(description.isNotBlank())Text(description,color=Color(0xFF455A64))
+      if(description.isNotBlank())Text(description,color=Color(0xFF5A4520))
       Row(horizontalArrangement=Arrangement.spacedBy(6.dp)){
        Surface(shape=RoundedCornerShape(10.dp),color=Color(0xFFF0F5F8)){Text("قبل: $before ج.م",modifier=Modifier.padding(horizontal=9.dp,vertical=6.dp),style=MaterialTheme.typography.labelMedium)}
        Surface(shape=RoundedCornerShape(10.dp),color=Color(0xFFE8F5F2)){Text("بعد: $after ج.م",modifier=Modifier.padding(horizontal=9.dp,vertical=6.dp),style=MaterialTheme.typography.labelMedium)}
@@ -554,7 +554,7 @@ private fun canWriteApi(info:JsonElement?,path:String):Boolean{
  val currentBadges=f.get("badges")?.takeIf{it.isJsonArray}?.asJsonArray?.mapNotNull{it.takeIf{v->v.isJsonPrimitive}?.asString}.orEmpty()
  Column(Modifier.fillMaxWidth().padding(top=10.dp),verticalArrangement=Arrangement.spacedBy(8.dp)){
   Text("المستوى الحالي: "+(f.get("level")?.asString?: "مبتدئ"),fontWeight=FontWeight.Bold,color=DarkAccent)
-  Surface(shape=RoundedCornerShape(14.dp),color=Color(0xFFF1F7FB),border=androidx.compose.foundation.BorderStroke(1.dp,Color(0xFFD6E6F0))){
+  Surface(shape=RoundedCornerShape(14.dp),color=Color(0xFFFAF7F0),border=androidx.compose.foundation.BorderStroke(1.dp,Color(0xFFE8E0CF))){
    Column(Modifier.fillMaxWidth().padding(10.dp),verticalArrangement=Arrangement.spacedBy(6.dp)){
     Text("تغيير مستوى الفني",fontWeight=FontWeight.Bold)
     Box{
@@ -598,7 +598,7 @@ private fun canWriteApi(info:JsonElement?,path:String):Boolean{
  Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp),verticalArrangement=Arrangement.spacedBy(12.dp)){
   Text("تعديل بيانات الفني",style=MaterialTheme.typography.titleLarge,fontWeight=FontWeight.ExtraBold,color=DarkAccent)
   OutlinedTextField(phone,{phone=it},label={Text("رقم الهاتف")},modifier=Modifier.fillMaxWidth(),singleLine=true)
-  Surface(Modifier.fillMaxWidth(),shape=RoundedCornerShape(17.dp),color=Color.White,shadowElevation=3.dp,border=androidx.compose.foundation.BorderStroke(1.dp,Color(0xFFDCE8F0))){
+  Surface(Modifier.fillMaxWidth(),shape=RoundedCornerShape(17.dp),color=Color.White,shadowElevation=3.dp,border=androidx.compose.foundation.BorderStroke(1.dp,Color(0xFFE8E0CF))){
    Column(Modifier.padding(12.dp),verticalArrangement=Arrangement.spacedBy(7.dp)){
     Text("الخدمات",fontWeight=FontWeight.Bold,color=DarkAccent)
     Text("اختار الخدمات المعتمدة للفني بدل كتابتها يدويًا",style=MaterialTheme.typography.bodySmall,color=Color.Gray)
@@ -615,7 +615,7 @@ private fun canWriteApi(info:JsonElement?,path:String):Boolean{
     if(selectedServices.isNotEmpty())Text(selectedServices.joinToString(" • "),style=MaterialTheme.typography.bodySmall,color=Accent)
    }
   }
-  Surface(Modifier.fillMaxWidth(),shape=RoundedCornerShape(17.dp),color=Color.White,shadowElevation=3.dp,border=androidx.compose.foundation.BorderStroke(1.dp,Color(0xFFDCE8F0))){
+  Surface(Modifier.fillMaxWidth(),shape=RoundedCornerShape(17.dp),color=Color.White,shadowElevation=3.dp,border=androidx.compose.foundation.BorderStroke(1.dp,Color(0xFFE8E0CF))){
    Column(Modifier.padding(12.dp),verticalArrangement=Arrangement.spacedBy(7.dp)){
     Text("مناطق العمل",fontWeight=FontWeight.Bold,color=DarkAccent)
     Text("اختار المناطق من القائمة الموحدة المعتمدة",style=MaterialTheme.typography.bodySmall,color=Color.Gray)
@@ -667,7 +667,7 @@ private fun canWriteApi(info:JsonElement?,path:String):Boolean{
   Text("الرسائل",fontWeight=FontWeight.Bold,color=DarkAccent)
   messages?.forEach{entry->
    val msg=entry.asJsonObject
-   Card(Modifier.fillMaxWidth(),colors=CardDefaults.cardColors(containerColor=if(msg.get("senderRole")?.asString=="admin")Color(0xFFEAF5F7) else Color.White)){
+   Card(Modifier.fillMaxWidth(),colors=CardDefaults.cardColors(containerColor=if(msg.get("senderRole")?.asString=="admin")Color(0xFFF8F6F0) else Color.White)){
     Column(Modifier.padding(10.dp),verticalArrangement=Arrangement.spacedBy(5.dp)){
      Text(if(msg.get("senderRole")?.asString=="admin")"الإدارة" else "المستخدم",fontWeight=FontWeight.Bold)
      Text(msg.get("text")?.asString.orEmpty())
@@ -717,7 +717,7 @@ private fun canWriteApi(info:JsonElement?,path:String):Boolean{
    if(id.isNotBlank())Card(
     onClick={onOpen(id)},
     modifier=Modifier.fillMaxWidth(),
-    colors=CardDefaults.cardColors(containerColor=if(id==selectedId)Color(0xFFEAF5F7) else Color.White)
+    colors=CardDefaults.cardColors(containerColor=if(id==selectedId)Color(0xFFF8F6F0) else Color.White)
    ){
     Column(Modifier.padding(11.dp),verticalArrangement=Arrangement.spacedBy(3.dp)){
      Text((item?.get("subject")?.asString?: "استفسار عام")+" — "+(item?.get("ownerName")?.asString?: "مستخدم"),fontWeight=FontWeight.Bold,color=DarkAccent)
@@ -751,7 +751,7 @@ private fun canWriteApi(info:JsonElement?,path:String):Boolean{
     val m=message.takeIf{it.isJsonObject}?.asJsonObject
     val role=m?.get("senderRole")?.asString.orEmpty()
     val messageId=m?.get("_id")?.asString?:m?.get("id")?.asString.orEmpty()
-    Card(Modifier.fillMaxWidth(),colors=CardDefaults.cardColors(containerColor=if(role=="admin")Color(0xFFEAF5F7) else Color.White)){
+    Card(Modifier.fillMaxWidth(),colors=CardDefaults.cardColors(containerColor=if(role=="admin")Color(0xFFF8F6F0) else Color.White)){
      Column(Modifier.padding(10.dp),verticalArrangement=Arrangement.spacedBy(5.dp)){
       Text(if(role=="admin")"دعم حمزاوي سات" else if(role=="client")"العميل" else if(role=="assistant")"المساعد" else "الفني",fontWeight=FontWeight.Bold,color=DarkAccent)
       Text(m?.get("text")?.asString.orEmpty())
@@ -1327,7 +1327,7 @@ private data class RowAction(val label:String,val method:String,val path:String,
                         if(section==AdminSection.OFFERS && item.isJsonObject){
                             val orderSn=item.asJsonObject.get("sn")?.asString.orEmpty()
                             item.asJsonObject.get("offers")?.takeIf{it.isJsonArray}?.asJsonArray?.forEachIndexed{index,offer->
-                                Card(Modifier.fillMaxWidth().padding(top=6.dp),colors=CardDefaults.cardColors(containerColor=Color(0xFFF4F8FA))){
+                                Card(Modifier.fillMaxWidth().padding(top=6.dp),colors=CardDefaults.cardColors(containerColor=Color(0xFFF8F6F0))){
                                     Column(Modifier.padding(10.dp)){
                                         Text("العرض "+(index+1),fontWeight=FontWeight.Bold)
                                         Row(verticalAlignment=Alignment.CenterVertically){
@@ -1358,7 +1358,7 @@ private data class RowAction(val label:String,val method:String,val path:String,
                             val pending=item.asJsonObject.get("pendingProfileChange")?.takeIf{it.isJsonObject}?.asJsonObject
                             val before=pending?.get("before")?.takeIf{it.isJsonObject}?.asJsonObject
                             if(pending!=null){
-                                Card(Modifier.fillMaxWidth().padding(top=8.dp),colors=CardDefaults.cardColors(containerColor=Color(0xFFF4F8FA))){
+                                Card(Modifier.fillMaxWidth().padding(top=8.dp),colors=CardDefaults.cardColors(containerColor=Color(0xFFF8F6F0))){
                                     Column(Modifier.padding(10.dp),verticalArrangement=Arrangement.spacedBy(5.dp)){
                                         Text("مقارنة طلب تعديل البيانات",fontWeight=FontWeight.Bold,color=DarkAccent)
                                         Text("البيانات الحالية",fontWeight=FontWeight.SemiBold)
