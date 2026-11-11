@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Theme.SonaaAdmin" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">#FFFFFF</item>
+        <item name="windowSplashScreenBackground">#F8F6F0</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/sonaa_logo</item>
         <item name="windowSplashScreenAnimationDuration">900</item>
         <item name="postSplashScreenTheme">@style/Theme.SonaaAdmin.PostSplash</item>
@@ -10,7 +10,7 @@
         <item name="android:fontFamily">sans</item>
         <item name="android:colorAccent">#C9A34F</item>
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:statusBarColor">#FFFFFF</item>
+        <item name="android:statusBarColor">#F8F6F0</item>
         <item name="android:navigationBarColor">#F8F6F0</item>
     </style>
 </resources>
