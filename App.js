@@ -53,7 +53,7 @@ function AppContent() {
         <View style={styles.brandHeaderTitleWrap}>
           <Text style={styles.brandHeaderTitle}>حمزاوي سات</Text>
           <Animated.View pointerEvents="none" style={[styles.brandHeaderShimmer, { transform: [{ translateX: shimmerTranslate }] }]}>
-            <LinearGradient colors={['transparent', 'rgba(255,255,255,0.95)', 'rgba(100,220,238,0.72)', 'transparent']} locations={[0, 0.42, 0.58, 1]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.brandHeaderShimmerGradient} />
+            <LinearGradient colors={['transparent', 'rgba(255,246,220,0.98)', 'rgba(201,163,79,0.82)', 'transparent']} locations={[0, 0.42, 0.58, 1]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.brandHeaderShimmerGradient} />
           </Animated.View>
         </View>
       </View>

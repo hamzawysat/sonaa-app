@@ -40,7 +40,7 @@ export const styles = StyleSheet.create({
   bellBadgeText: { color: COLORS.white, fontSize: 9, fontWeight: '900' },
 
   // HOME PREMIUM
-  homePage: { flexGrow: 1, paddingHorizontal: 20, paddingTop: 16, paddingBottom: 22, gap: 18, justifyContent: 'center', backgroundColor: '#E4ECF5' },
+  homePage: { flexGrow: 1, paddingHorizontal: 20, paddingTop: 16, paddingBottom: 22, gap: 18, justifyContent: 'center', backgroundColor: '#F8F6F0' },
   homeBrandArea: { alignItems: 'center', paddingBottom: 2 },
   homeLogoCirclePremium: { width: 96, height: 96, borderRadius: 28, alignItems: 'center', justifyContent: 'center', backgroundColor: COLORS.white, borderWidth: 1, borderColor: COLORS.border, shadowColor: COLORS.navy, shadowOpacity: 0.08, shadowRadius: 16, shadowOffset: { width: 0, height: 6 }, elevation: 4, marginBottom: 12 },
   homeLogoImage: { width: 68, height: 68, alignSelf: 'center' },
