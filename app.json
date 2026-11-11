@@ -4,7 +4,7 @@
     "slug": "sonaa",
     "version": "1.0.12",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/LOGO_UPLOAD_HERE/logo.png",
     "platforms": [
       "android"
     ],
@@ -13,7 +13,7 @@
       "versionCode": 13,
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/LOGO_UPLOAD_HERE/logo.png",
         "backgroundColor": "#171A22"
       }
     },
@@ -24,7 +24,7 @@
       }
     },
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/LOGO_UPLOAD_HERE/logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#171A22"
     },
