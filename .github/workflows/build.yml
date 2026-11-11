@@ -1,7 +1,10 @@
-name: Build APK Final
+name: Build Hamzawy Sat APKs
 on:
   push:
-    branches: [ main, 'feature/sync-web-updates-20261103' ]
+    branches:
+      - main
+      - feature/sync-web-updates-20261103
+      - hamzawy-sat-brand-conversion
     paths:
       - 'App.js'
       - 'src/**'
@@ -10,12 +13,37 @@ on:
       - 'assets/**'
       - 'package.json'
       - 'package-lock.json'
-      - 'android/**'
       - '.github/workflows/build.yml'
   workflow_dispatch:
+
 jobs:
-  build:
+  verify:
+    name: Verify app before APK builds
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+      - name: Run regression tests
+        run: npm test
+      - name: Verify Android JavaScript bundle
+        run: npx expo export --platform android --output-dir /tmp/hamzawy-sat-export
+
+  build:
+    name: Build ${{ matrix.variant }} APK
+    needs: verify
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - variant: modern
+            architecture: arm64-v8a
+          - variant: legacy
+            architecture: armeabi-v7a
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -27,33 +55,21 @@ jobs:
           java-version: '17'
       - name: Install dependencies
         run: npm install --legacy-peer-deps
-      - name: Generate app icons and splash from official logo
-        run: |
-          mkdir -p assets
-          python3 -m pip install --quiet Pillow
-          python3 - <<'PY'
-          from PIL import Image
-          from pathlib import Path
-          source = Path("assets/LOGO_UPLOAD_HERE/logo.png")
-          if not source.is_file():
-              raise SystemExit("Official logo missing: assets/LOGO_UPLOAD_HERE/logo.png")
-          logo = Image.open(source).convert("RGBA")
-          if logo.width < 128 or logo.height < 128:
-              raise SystemExit("Official logo image is unexpectedly small")
-          logo = logo.resize((1024, 1024), Image.Resampling.LANCZOS)
-          logo.convert("RGB").save("assets/icon.png", quality=95)
-          logo.save("assets/adaptive-icon.png")
-          logo.save("assets/splash-icon.png")
-          logo.convert("RGB").save("assets/splash.png", quality=95)
-          PY
-      - name: Prebuild Android
+      - name: Generate Android project with Hamzawy Sat logo and splash
         run: npx expo prebuild --platform android --clean
-      - name: Build Release APK
+      - name: Build ${{ matrix.variant }} release APK
         run: |
           cd android
           chmod +x gradlew
-          ./gradlew assembleRelease
+          ./gradlew assembleRelease "-PreactNativeArchitectures=${{ matrix.architecture }}"
+      - name: Name APK and report size
+        run: |
+          mkdir -p artifacts
+          cp android/app/build/outputs/apk/release/app-release.apk "artifacts/hamzawy-sat-${{ matrix.variant }}-${{ matrix.architecture }}.apk"
+          ls -lh artifacts/*.apk
       - uses: actions/upload-artifact@v4
         with:
-          name: sonaa-apk-final
-          path: android/app/build/outputs/apk/release/app-release.apk
+          name: hamzawy-sat-${{ matrix.variant }}-${{ matrix.architecture }}-apk
+          path: artifacts/hamzawy-sat-${{ matrix.variant }}-${{ matrix.architecture }}.apk
+          if-no-files-found: error
+          retention-days: 30

@@ -550,3 +550,16 @@ test('technician dashboard opens on the opportunities tab by default', () => {
   const state = fs.readFileSync(path.join(root, 'src/hooks/useAppState.js'), 'utf8');
   assert.match(state, /tab: 'available'/);
 });
+
+test('Hamzawy Sat client and technician refresh controls use black-and-gold branding', () => {
+  const client = fs.readFileSync(path.join(root, 'src/screens/client/ClientDashboard.js'), 'utf8');
+  const technician = fs.readFileSync(path.join(root, 'src/screens/technician/TechnicianDashboard.js'), 'utf8');
+  const startup = fs.readFileSync(path.join(root, 'src/components/StartupErrorBoundary.js'), 'utf8');
+  for (const screen of [client, technician]) {
+    assert.ok(screen.includes("colors={['#C9A34F', '#8A6724']}"), 'refresh button must use the gold brand gradient');
+    assert.ok(!screen.includes('#2563EB') && !screen.includes('#0B1B3A'), 'legacy blue refresh colors must be absent');
+  }
+  assert.ok(startup.includes("backgroundColor: '#F8F6F0'"), 'startup error screen must use the Hamzawy Sat cream background');
+  assert.ok(startup.includes("backgroundColor: '#A9822E'"), 'startup retry button must use the gold brand');
+  assert.ok(!startup.includes('#F5F7FF') && !startup.includes('#172554'), 'legacy blue startup colors must be absent');
+});
