@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "sonaa",
+    "name": "حمزاوي سات",
     "slug": "sonaa",
     "version": "1.0.12",
     "orientation": "portrait",
@@ -34,7 +34,7 @@
       [
         "expo-av",
         {
-          "microphonePermission": "السماح لصُنّاع بتسجيل وصف الطلب الصوتي."
+          "microphonePermission": "السماح لحمزاوي سات بتسجيل وصف الطلب الصوتي."
         }
       ]
     ]

@@ -15,7 +15,7 @@ class SonaaMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(message: RemoteMessage) {
         val type = message.data["type"].orEmpty()
         val channel = channelFor(type)
-        val title = message.notification?.title ?: message.data["title"] ?: "إشعار من صُنّاع"
+        val title = message.notification?.title ?: message.data["title"] ?: "إشعار من حمزاوي سات"
         val body = message.notification?.body ?: message.data["message"] ?: ""
         val destination = when (channel) {
             "order_new" -> "orders"

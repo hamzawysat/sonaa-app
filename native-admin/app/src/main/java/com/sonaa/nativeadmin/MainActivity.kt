@@ -143,9 +143,9 @@ class MainActivity : ComponentActivity() {
  )
  Box(Modifier.fillMaxSize().background(Color.White),contentAlignment=Alignment.Center){
   Column(horizontalAlignment=Alignment.CenterHorizontally){
-   Image(painterResource(R.drawable.sonaa_logo),"شعار صُنّاع",Modifier.offset(x=horizontalOffset.dp).size(150.dp))
+   Image(painterResource(R.drawable.sonaa_logo),"شعار حمزاوي سات",Modifier.offset(x=horizontalOffset.dp).size(150.dp))
    Spacer(Modifier.height(18.dp))
-   Text("صُنّاع",style=MaterialTheme.typography.headlineMedium,fontWeight=FontWeight.Black,color=DarkAccent)
+   Text("حمزاوي سات",style=MaterialTheme.typography.headlineMedium,fontWeight=FontWeight.Black,color=DarkAccent)
    Text("كل خدمة تبدأ بخطوة",color=Accent,modifier=Modifier.padding(top=4.dp))
   }
  }
@@ -153,9 +153,9 @@ class MainActivity : ComponentActivity() {
 @Composable private fun LoginScreen(state: AdminUiState, login: (String, String) -> Unit) {
     var phone by remember { mutableStateOf("") }; var password by remember { mutableStateOf("") }
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-        Image(painterResource(R.drawable.sonaa_logo), "شعار صُنّاع", Modifier.size(112.dp))
+        Image(painterResource(R.drawable.sonaa_logo), "شعار حمزاوي سات", Modifier.size(112.dp))
         Spacer(Modifier.height(16.dp))
-        Text("إدارة صُنّاع CON", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold, color = DarkAccent)
+        Text("إدارة حمزاوي سات CON", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold, color = DarkAccent)
         Text("سجّل الدخول للمتابعة", color = Color.Gray, modifier = Modifier.padding(bottom = 22.dp, top = 5.dp))
         OutlinedTextField(phone, { phone = it }, label = { Text("رقم الهاتف") }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone), singleLine = true, modifier = Modifier.fillMaxWidth())
         Spacer(Modifier.height(10.dp))
@@ -169,9 +169,9 @@ class MainActivity : ComponentActivity() {
 @Composable private fun HomeScreen(state: AdminUiState, vm: AdminViewModel) {
     Column(Modifier.fillMaxSize()) {
         Row(Modifier.fillMaxWidth().background(Color.White).padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
-            Image(painterResource(R.drawable.sonaa_logo), "شعار صُنّاع", Modifier.size(42.dp))
+            Image(painterResource(R.drawable.sonaa_logo), "شعار حمزاوي سات", Modifier.size(42.dp))
             Column(Modifier.weight(1f).padding(horizontal = 10.dp)) {
-                Text("إدارة صُنّاع CON", fontWeight = FontWeight.Bold, color = DarkAccent)
+                Text("إدارة حمزاوي سات CON", fontWeight = FontWeight.Bold, color = DarkAccent)
                 Text(state.section.title, style = MaterialTheme.typography.labelMedium, color = Color.Gray)
             }
             Surface(
@@ -600,7 +600,7 @@ private fun canWriteApi(info:JsonElement?,path:String):Boolean{
   OutlinedTextField(phone,{phone=it},label={Text("رقم الهاتف")},modifier=Modifier.fillMaxWidth(),singleLine=true)
   Surface(Modifier.fillMaxWidth(),shape=RoundedCornerShape(17.dp),color=Color.White,shadowElevation=3.dp,border=androidx.compose.foundation.BorderStroke(1.dp,Color(0xFFDCE8F0))){
    Column(Modifier.padding(12.dp),verticalArrangement=Arrangement.spacedBy(7.dp)){
-    Text("الخدمات والمهن",fontWeight=FontWeight.Bold,color=DarkAccent)
+    Text("الخدمات",fontWeight=FontWeight.Bold,color=DarkAccent)
     Text("اختار الخدمات المعتمدة للفني بدل كتابتها يدويًا",style=MaterialTheme.typography.bodySmall,color=Color.Gray)
     Box{
      OutlinedButton(onClick={servicesExpanded=true},modifier=Modifier.fillMaxWidth(),shape=RoundedCornerShape(13.dp)){Text(if(selectedServices.isEmpty())"اختيار الخدمات" else "تم اختيار ${selectedServices.size} خدمة")}
@@ -753,7 +753,7 @@ private fun canWriteApi(info:JsonElement?,path:String):Boolean{
     val messageId=m?.get("_id")?.asString?:m?.get("id")?.asString.orEmpty()
     Card(Modifier.fillMaxWidth(),colors=CardDefaults.cardColors(containerColor=if(role=="admin")Color(0xFFEAF5F7) else Color.White)){
      Column(Modifier.padding(10.dp),verticalArrangement=Arrangement.spacedBy(5.dp)){
-      Text(if(role=="admin")"دعم صُنّاع" else if(role=="client")"العميل" else if(role=="assistant")"المساعد" else "الفني",fontWeight=FontWeight.Bold,color=DarkAccent)
+      Text(if(role=="admin")"دعم حمزاوي سات" else if(role=="client")"العميل" else if(role=="assistant")"المساعد" else "الفني",fontWeight=FontWeight.Bold,color=DarkAccent)
       Text(m?.get("text")?.asString.orEmpty())
       Text(m?.get("createdAt")?.toString().orEmpty(),style=MaterialTheme.typography.labelSmall,color=Color.Gray)
       if(messageId.isNotBlank())TextButton(onClick={onAction("DELETE","api/support/admin/$selectedId/messages/$messageId",JsonObject())},enabled=canWrite("api/support/admin/$selectedId/messages/$messageId")){Text("حذف الرسالة",color=Color(0xFFB3261E))}
@@ -850,7 +850,7 @@ private fun canWriteApi(info:JsonElement?,path:String):Boolean{
    OutlinedButton(onClick={
     val intent=Intent(Intent.ACTION_SEND).apply{
      type="text/csv"
-     putExtra(Intent.EXTRA_SUBJECT,"تقرير صُنّاع")
+     putExtra(Intent.EXTRA_SUBJECT,"تقرير حمزاوي سات")
      putExtra(Intent.EXTRA_TEXT,csv)
     }
     context.startActivity(Intent.createChooser(intent,"تصدير التقرير"))

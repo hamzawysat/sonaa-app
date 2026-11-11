@@ -46,7 +46,7 @@ export function ClientDashboard({ context }) {
         <View style={styles.clientHeaderRight}>
           <View style={styles.clientHeaderInfo}>
             <Text style={styles.clientNameSmall} numberOfLines={1}>أهلًا {session.user?.name || 'بك'}</Text>
-            <Text style={styles.clientRoleSmall}>عميل صُنّاع</Text>
+            <Text style={styles.clientRoleSmall}>عميل حمزاوي سات</Text>
           </View>
         </View>
       </View>
@@ -54,9 +54,9 @@ export function ClientDashboard({ context }) {
       <View style={styles.tabRowPremium}>{[{key:'new',label:'طلب جديد',icon:'＋'},{key:'current',label:'الطلبات الجارية',count:clientData.orders.filter(o => !['تم الانتهاء','منتهي','ملغي','مؤرشف','منتهي - اعتذار'].includes(o.status)).length},{key:'previous',label:'سابقة',count:clientData.orders.filter(o => ['تم الانتهاء','منتهي','ملغي','مؤرشف','منتهي - اعتذار'].includes(o.status)).length},{key:'track',label:'تتبع'},{key:'complaint',label:'شكوى'}].map(t => <TouchableOpacity key={t.key} onPress={() => setClientTab(t.key)} style={[styles.pillPremium, clientTab===t.key && styles.pillPremiumActive]}><Text style={[styles.pillPremiumText,clientTab===t.key && styles.pillPremiumTextActive]}>{t.icon ? t.icon + ' ' : ''}{t.label}{t.count ? ` (${t.count})` : ''}</Text></TouchableOpacity>)}</View>
 
     <ScrollView ref={clientScrollRef} contentContainerStyle={[styles.page, { paddingBottom: 110 }]} showsVerticalScrollIndicator={false}>
-      {clientTab === 'new' ? <><View style={styles.welcomeCard}><Text style={styles.welcomeTitle}>اطلب خدمتك الآن 🚀</Text><Text style={styles.welcomeSub}>اختار المهنة والخدمة والفني المناسب هيجيلك</Text></View>
+      {clientTab === 'new' ? <><View style={styles.welcomeCard}><Text style={styles.welcomeTitle}>اطلب خدمتك الآن 🚀</Text><Text style={styles.welcomeSub}>اختار الخدمة والفني المناسب هيجيلك</Text></View>
       {servicesLoading ? <ActivityIndicator color={COLORS.teal} /> : <>
-        <Text style={styles.fieldLabelPremium}>① اختار المهنة الرئيسية</Text>
+        <Text style={styles.fieldLabelPremium}>① اختار قسم الخدمة</Text>
         <View style={styles.serviceTilesPremium}>
           {categories.map(category => { const technicianCount = form.area ? Number(category.technicianCountByArea?.[form.area] || 0) : Number(category.technicianCount || 0); return <TouchableOpacity key={category.label} onPress={() => { setSelected(category); updateForm('service', ''); setServicePickerOpen(false); setSubservicePickerOpen(false); requestAnimationFrame(() => clientScrollRef.current?.scrollTo({ y: Math.max(0, clientServiceDetailYRef.current - 24), animated: true })); }} style={[styles.serviceTilePremium, selected?.label === category.label && styles.serviceTilePremiumSelected]}>
             <View style={[styles.serviceIconCircle, selected?.label === category.label && styles.serviceIconCircleSelected]}><Text style={styles.serviceTileIcon}>{category.emoji || '🛠️'}</Text></View>

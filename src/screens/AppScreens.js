@@ -165,7 +165,7 @@ function AppScreens({ onScreenChange, onAuthRestoringChange }) {
         screenRef.current = target;
         setScreenState(target);
       } catch (error) {
-        console.warn('تعذر استعادة جلسة صُنّاع:', error?.message || error);
+        console.warn('تعذر استعادة جلسة حمزاوي سات:', error?.message || error);
       } finally {
         if (mounted) setAuthRestoring(false);
       }
@@ -203,7 +203,7 @@ function AppScreens({ onScreenChange, onAuthRestoringChange }) {
         setScreenState('home');
         return true;
       }
-      Alert.alert('صُنّاع', 'أنت بالفعل في الصفحة الرئيسية.');
+      Alert.alert('حمزاوي سات', 'أنت بالفعل في الصفحة الرئيسية.');
       return true;
     };
     const subscription = BackHandler.addEventListener('hardwareBackPress', onHardwareBack);
@@ -427,7 +427,7 @@ function AppScreens({ onScreenChange, onAuthRestoringChange }) {
       { text: 'إلغاء', style: 'cancel' },
       { text: 'ترقية', onPress: async () => {
         try {
-          await api(`/admin/fannis/${encodeURIComponent(fanni._id || fanni.id)}/level`, { method: 'PATCH', token: session.token, body: { level: next, reason: 'ترقية من تطبيق صُنّاع' } });
+          await api(`/admin/fannis/${encodeURIComponent(fanni._id || fanni.id)}/level`, { method: 'PATCH', token: session.token, body: { level: next, reason: 'ترقية من تطبيق حمزاوي سات' } });
           setReloadKey(v => v + 1);
           Alert.alert('تمت الترقية', `المستوى الجديد: ${next}`);
         } catch (err) { Alert.alert('تعذر الترقية', err.message || 'راجع صلاحيات الحساب.'); }
@@ -463,7 +463,7 @@ function AppScreens({ onScreenChange, onAuthRestoringChange }) {
     Alert.alert('تأكيد الإجراء', `هل تريد ${labels[action] || 'تنفيذ الإجراء'}: ${fanni.name || 'الفني'}؟`, [
       { text: 'إلغاء', style: 'cancel' },
       { text: 'تأكيد', style: action === 'reject' || action === 'disable' ? 'destructive' : 'default', onPress: async () => {
-        try { const result = await api(`/admin/fannis/${encodeURIComponent(id)}/${action}`, { method: 'POST', token: session.token, body: action === 'reject' || action === 'disable' ? { reason: 'إجراء من تطبيق صُنّاع' } : {} }); Alert.alert('تم', result.message || 'تم تحديث حالة الفني.'); setReloadKey(v => v + 1); }
+        try { const result = await api(`/admin/fannis/${encodeURIComponent(id)}/${action}`, { method: 'POST', token: session.token, body: action === 'reject' || action === 'disable' ? { reason: 'إجراء من تطبيق حمزاوي سات' } : {} }); Alert.alert('تم', result.message || 'تم تحديث حالة الفني.'); setReloadKey(v => v + 1); }
         catch (err) { Alert.alert('تعذر تنفيذ الإجراء', err.message || 'راجع صلاحيات الحساب.'); }
       } },
     ]);
@@ -489,7 +489,7 @@ function AppScreens({ onScreenChange, onAuthRestoringChange }) {
     Alert.alert(approve ? 'اعتماد الشحن' : 'رفض الشحن', `${approve ? 'إضافة' : 'رفض'} مبلغ ${request.amount || 0} جنيه ${approve ? 'إلى محفظة الفني' : 'في طلب الشحن'}؟`, [
       { text: 'إلغاء', style: 'cancel' },
       { text: approve ? 'اعتماد وإضافة الرصيد' : 'رفض الطلب', style: approve ? 'default' : 'destructive', onPress: async () => {
-        try { const result = await api(`/admin/topup-requests/${encodeURIComponent(id)}/${action}`, { method: 'POST', token: session.token, body: approve ? {} : { reason: 'رفض من تطبيق صُنّاع' } }); Alert.alert('تم', result.message || 'تمت معالجة طلب الشحن.'); setReloadKey(v => v + 1); }
+        try { const result = await api(`/admin/topup-requests/${encodeURIComponent(id)}/${action}`, { method: 'POST', token: session.token, body: approve ? {} : { reason: 'رفض من تطبيق حمزاوي سات' } }); Alert.alert('تم', result.message || 'تمت معالجة طلب الشحن.'); setReloadKey(v => v + 1); }
         catch (err) { Alert.alert('تعذر معالجة الشحن', err.message || 'ربما تمت معالجة الطلب من قبل.'); }
       } },
     ]);
@@ -563,11 +563,11 @@ function AppScreens({ onScreenChange, onAuthRestoringChange }) {
       return;
     }
     if (!guidelinesReachedEnd) {
-      Alert.alert('ميثاق صُنّاع', 'لازم تقرأ الميثاق حتى آخره قبل الموافقة.');
+      Alert.alert('ميثاق حمزاوي سات', 'لازم تقرأ الميثاق حتى آخره قبل الموافقة.');
       return;
     }
     if (!guidelinesChecked) {
-      Alert.alert('الموافقة مطلوبة', 'علّم على مربع قرأت وأوافق على ميثاق صُنّاع لإكمال التسجيل.');
+      Alert.alert('الموافقة مطلوبة', 'علّم على مربع قرأت وأوافق على ميثاق حمزاوي سات لإكمال التسجيل.');
       return;
     }
     setLoginLoading(true);
@@ -1089,7 +1089,7 @@ function AppScreens({ onScreenChange, onAuthRestoringChange }) {
         token: session?.token,
         body: { accepted: true, version: '2026-10-20-v1' }
       });
-      Alert.alert('تم تسجيل الموافقة', result.message || 'تم تسجيل موافقتك على ميثاق صُنّاع.');
+      Alert.alert('تم تسجيل الموافقة', result.message || 'تم تسجيل موافقتك على ميثاق حمزاوي سات.');
       setReloadKey(value => value + 1);
     } catch (err) {
       Alert.alert('تعذر تسجيل الموافقة', err.message || 'حاول مرة أخرى.');
@@ -1127,7 +1127,7 @@ function AppScreens({ onScreenChange, onAuthRestoringChange }) {
       setSupportDraft('');
       setSupportCase(item);
       setSupportCases(current => [item, ...current.filter(x => String(x._id) !== String(item._id))]);
-      Alert.alert('تم فتح محادثة الدعم', 'رسالتك محفوظة داخل صُنّاع. لو احتاجت تدخلًا بشريًا، اضغط «طلب تدخل الدعم».');
+      Alert.alert('تم فتح محادثة الدعم', 'رسالتك محفوظة داخل حمزاوي سات. لو احتاجت تدخلًا بشريًا، اضغط «طلب تدخل الدعم».');
     } catch (err) { setSupportError(err.message || 'تعذر إرسال الرسالة'); }
     finally { setSupportLoading(false); }
   }
@@ -1541,7 +1541,7 @@ function AppScreens({ onScreenChange, onAuthRestoringChange }) {
     const sn = String(order?.sn || order?.orderSn || '').trim().toUpperCase();
     if (!/^SN\d{6}$/.test(sn)) { Alert.alert('كود الطلب', 'كود الطلب غير صالح.'); return; }
     const label = action === 'cancel' ? 'إلغاء' : 'أرشفة';
-    Alert.alert(label + ' الطلب ' + sn, 'هل تؤكد ' + label + ' الطلب؟ سيتم تسجيل الإجراء في سجل الإدارة.', [{ text: 'رجوع', style: 'cancel' }, { text: 'تأكيد', style: 'destructive', onPress: async () => { try { const result = await api('/admin/orders/' + encodeURIComponent(sn) + '/' + action, { method: 'POST', token: session.token, body: { reason: 'إجراء إداري من تطبيق صُنّاع' } }); Alert.alert('تم الإجراء', result.message || 'تم تحديث الطلب.'); setReloadKey(v => v + 1); } catch (err) { Alert.alert('تعذر ' + label + ' الطلب', err.message || 'راجع حالة الطلب.'); } } }]);
+    Alert.alert(label + ' الطلب ' + sn, 'هل تؤكد ' + label + ' الطلب؟ سيتم تسجيل الإجراء في سجل الإدارة.', [{ text: 'رجوع', style: 'cancel' }, { text: 'تأكيد', style: 'destructive', onPress: async () => { try { const result = await api('/admin/orders/' + encodeURIComponent(sn) + '/' + action, { method: 'POST', token: session.token, body: { reason: 'إجراء إداري من تطبيق حمزاوي سات' } }); Alert.alert('تم الإجراء', result.message || 'تم تحديث الطلب.'); setReloadKey(v => v + 1); } catch (err) { Alert.alert('تعذر ' + label + ' الطلب', err.message || 'راجع حالة الطلب.'); } } }]);
   }
   async function refreshAdminProfileEdits() {
     try {
@@ -1560,7 +1560,7 @@ function AppScreens({ onScreenChange, onAuthRestoringChange }) {
       { text: 'إلغاء', style: 'cancel' },
       { text: action === 'approve' ? 'موافقة' : 'رفض', style: action === 'reject' ? 'destructive' : 'default', onPress: async () => {
         try {
-          const result = await api('/admin/fanni-profile-edits/' + encodeURIComponent(id) + '/' + action, { method: 'POST', token: session.token, body: { reason: action === 'reject' ? 'مراجعة الطلب من تطبيق صُنّاع' : '' } });
+          const result = await api('/admin/fanni-profile-edits/' + encodeURIComponent(id) + '/' + action, { method: 'POST', token: session.token, body: { reason: action === 'reject' ? 'مراجعة الطلب من تطبيق حمزاوي سات' : '' } });
           Alert.alert('تمت المراجعة', result.message || 'تم تحديث حالة الطلب.');
           const refreshed = await api('/admin/fanni-profile-edits', { token: session.token });
           setAdminPendingProfileEdits(toList(refreshed, ['requests', 'items', 'fannis']));
@@ -1609,7 +1609,7 @@ function AppScreens({ onScreenChange, onAuthRestoringChange }) {
   async function adminClientAction(phone, action) {
     if (!phone) return Alert.alert('بيانات العميل', 'رقم الهاتف غير متاح.');
     const labels = { block: 'تعليق الحساب', unblock: 'إعادة تفعيل الحساب', account: 'حذف الحساب' };
-    Alert.alert(labels[action], 'هل تريد ' + labels[action] + ' للعميل ' + phone + '؟', [{ text: 'إلغاء', style: 'cancel' }, { text: 'تأكيد', style: 'destructive', onPress: async () => { try { const method = action === 'account' ? 'DELETE' : 'POST'; const result = await api('/admin/clients/' + encodeURIComponent(phone) + (action === 'account' ? '/account' : '/' + action), { method, token: session.token, body: { ...(action === 'block' ? { reason: 'تعليق إداري من تطبيق صُنّاع' } : {}) } }); Alert.alert('تم الإجراء', result.message || 'تم تحديث حساب العميل.'); setReloadKey(v => v + 1); } catch (err) { Alert.alert('تعذر تنفيذ الإجراء', err.message || 'راجع حالة حساب العميل والطلبات النشطة.'); } } }]);
+    Alert.alert(labels[action], 'هل تريد ' + labels[action] + ' للعميل ' + phone + '؟', [{ text: 'إلغاء', style: 'cancel' }, { text: 'تأكيد', style: 'destructive', onPress: async () => { try { const method = action === 'account' ? 'DELETE' : 'POST'; const result = await api('/admin/clients/' + encodeURIComponent(phone) + (action === 'account' ? '/account' : '/' + action), { method, token: session.token, body: { ...(action === 'block' ? { reason: 'تعليق إداري من تطبيق حمزاوي سات' } : {}) } }); Alert.alert('تم الإجراء', result.message || 'تم تحديث حساب العميل.'); setReloadKey(v => v + 1); } catch (err) { Alert.alert('تعذر تنفيذ الإجراء', err.message || 'راجع حالة حساب العميل والطلبات النشطة.'); } } }]);
   }
   async function adminSetTechnicianLevel(fanni, level) {
     const id = fanni?._id || fanni?.id; if (!id) return;
@@ -1739,7 +1739,7 @@ function AppScreens({ onScreenChange, onAuthRestoringChange }) {
         <AreaPicker label="مناطق العمل *" options={areas} multiple value={form.areas} onChange={value => updateForm('areas', value)} maxSelections={30} />
         <Text style={styles.detail}>اختار المناطق التي تستطيع العمل فيها من القائمة المعتمدة. يمكنك اختيار حتى 30 منطقة.</Text>
 
-        <Text style={styles.sectionTitle}>ميثاق صُنّاع – التعامل المهني مع العملاء</Text>
+        <Text style={styles.sectionTitle}>ميثاق حمزاوي سات – التعامل المهني مع العملاء</Text>
         <Text style={styles.detail}>اقرأ الميثاق كاملًا. لن تتمكن من الموافقة أو إرسال طلب التسجيل قبل الوصول إلى نهاية النص.</Text>
         <View style={{ height: 240, borderWidth: 1, borderColor: COLORS.border, borderRadius: 14, overflow: 'hidden', backgroundColor: COLORS.white }}>
           <ScrollView
@@ -1763,7 +1763,7 @@ function AppScreens({ onScreenChange, onAuthRestoringChange }) {
             <Text style={styles.detail}>٥. احمِ بيانات العميل ولا تستخدمها خارج الطلب.</Text>
             <Text style={styles.detail}>٦. يحق للطرفين التقييم بعد الإكمال؛ ممنوع الإكراه على تقييم إيجابي أو التلاعب بالتقييمات.</Text>
             <Text style={styles.detail}>٧. المخالفات قد تؤدي إلى مراجعة الطلب أو تعليق الحساب أو إيقافه.</Text>
-            <Text style={styles.detail}>بالضغط على الموافقة، تؤكد أنك قرأت التعليمات وفهمتها وتتعهد بالالتزام بها أثناء استخدام منصة صُنّاع.</Text>
+            <Text style={styles.detail}>بالضغط على الموافقة، تؤكد أنك قرأت التعليمات وفهمتها وتتعهد بالالتزام بها أثناء استخدام منصة حمزاوي سات.</Text>
           </ScrollView>
         </View>
         <TouchableOpacity disabled={!guidelinesReachedEnd} onPress={() => setGuidelinesChecked(value => !value)} activeOpacity={0.8}
@@ -1772,7 +1772,7 @@ function AppScreens({ onScreenChange, onAuthRestoringChange }) {
             <Text style={{ color: COLORS.white, fontWeight: '900' }}>{guidelinesChecked ? '✓' : ''}</Text>
           </View>
           <Text style={[styles.detail, { flex: 1, fontWeight: '800', color: COLORS.text }]}>
-            {guidelinesReachedEnd ? 'قرأت ميثاق صُنّاع كاملًا وأوافق على الالتزام به.' : 'مرّر الميثاق حتى نهايته لتفعيل الموافقة.'}
+            {guidelinesReachedEnd ? 'قرأت ميثاق حمزاوي سات كاملًا وأوافق على الالتزام به.' : 'مرّر الميثاق حتى نهايته لتفعيل الموافقة.'}
           </Text>
         </TouchableOpacity>
       </>}
@@ -1797,9 +1797,9 @@ function AppScreens({ onScreenChange, onAuthRestoringChange }) {
         <View style={styles.homeLogoCirclePremium}>
           <Image source={require('../../assets/LOGO_UPLOAD_HERE/logo.png')} style={styles.homeLogoImage} resizeMode="contain" />
         </View>
-        <Text style={styles.homeBrandTitlePremium}>صُنّاع</Text>
+        <Text style={styles.homeBrandTitlePremium}>حمزاوي سات</Text>
         <Text style={styles.homeTaglinePremium}>كُلُّ خِدْمَةٍ تَبْدَأُ بِخُطْوَةٍ</Text>
-        <Text style={styles.homeIntroPremium}>أكثر من عشرين مهنة في مكان واحد، وطلب خدمتك بخطوات بسيطة وسريعة.</Text>
+        <Text style={styles.homeIntroPremium}>خدمات الدش والريسيفرات والكاميرات والشاشات في مكان واحد، واطلب خدمتك بخطوات بسيطة وسريعة.</Text>
       </View>
       <View style={styles.roleCardsPremium}>
         <TouchableOpacity activeOpacity={0.88} onPress={() => goLogin('client')} style={[styles.roleCardPremium, styles.clientRoleCardPremium]}>
@@ -1811,7 +1811,7 @@ function AppScreens({ onScreenChange, onAuthRestoringChange }) {
           <View style={styles.roleCardCopy}><Text style={styles.roleTitlePremium}>الدخول كفني</Text><Text style={styles.roleDescriptionPremium}>استقبل الطلبات وقدّم عروضك وتابع مكسبك.</Text><View style={[styles.roleActionBadge, {backgroundColor:COLORS.navy}]}><Text style={styles.roleActionBadgeText}>شوف فرص الشغل ←</Text></View></View>
         </TouchableOpacity>
       </View>
-      <View style={styles.homeFooterPremium}><View style={styles.homeFooterDot} /><Text style={styles.homeFooterText}>اختار طريقة الدخول وابدأ مع صُنّاع</Text></View>
+      <View style={styles.homeFooterPremium}><View style={styles.homeFooterDot} /><Text style={styles.homeFooterText}>اختار طريقة الدخول وابدأ مع حمزاوي سات</Text></View>
     </ScrollView>
   </SafeAreaView>;
 }

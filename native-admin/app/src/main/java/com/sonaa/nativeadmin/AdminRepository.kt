@@ -74,7 +74,7 @@ enum class AdminSection(
  OFFERS("عروض الفنيين","api/admin/orders",listOf("orders","data","items")),
  WALLETS("محافظ الفنيين","api/admin/fannis",listOf("fannis","data","items")),
  TOPUPS("طلبات شحن المحافظ","api/admin/topup-requests",listOf("requests","data","items")),
- SERVICES("المهن والخدمات","api/admin/services",listOf("services","data","items")),
+ SERVICES("الخدمات","api/admin/services",listOf("services","data","items")),
  REGIONS("مناطق الخدمة","api/admin/regions",listOf("regions","items","data")),
  COMPLAINTS("الشكاوى","api/admin/complaints",listOf("complaints","data","items")),
  SUPPORT("الدعم والمخالفات","api/admin/support/violations",listOf("violations","cases","data","items")),

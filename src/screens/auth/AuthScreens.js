@@ -13,7 +13,7 @@ export function LoginScreen({ authMode, username, setUsername, password, setPass
         <Image source={require('../../../assets/LOGO_UPLOAD_HERE/logo.png')} style={styles.loginLogo} resizeMode="contain" />
       </View>
       <View style={styles.loginHeading}>
-        <Text style={styles.loginTitle}>{authMode === 'client' ? 'أهلًا بيك في صُنّاع' : 'أهلًا بيك يا فني صُنّاع'}</Text>
+        <Text style={styles.loginTitle}>{authMode === 'client' ? 'أهلًا بيك في حمزاوي سات' : 'أهلًا بيك يا فني حمزاوي سات'}</Text>
         <Text style={styles.loginSubtitle}>{authMode === 'client' ? 'سجّل دخولك وخلّي طلباتك أسهل.' : 'سجّل دخولك وتابع فرص الشغل المتاحة ليك.'}</Text>
       </View>
       <View style={styles.loginForm}>
