@@ -8,6 +8,7 @@ on:
     paths:
       - 'App.js'
       - 'src/**'
+      - 'tests/**'
       - 'app.json'
       - 'package.json'
       - 'assets/**'
