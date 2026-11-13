@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - experiment/apk-size-optimization
+      - fix/catalog-on-tested-apk-baseline
     paths:
       - 'App.js'
       - 'src/**'
@@ -24,7 +25,7 @@ jobs:
       - name: Checkout experiment branch only
         uses: actions/checkout@v4
         with:
-          ref: experiment/apk-size-optimization
+          ref: ${{ github.ref }}
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
