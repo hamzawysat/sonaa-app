@@ -40,24 +40,41 @@ jobs:
         run: npm install --legacy-peer-deps
       - name: Run app regression tests
         run: npm test
-      - name: Generate app icons and splash from official logo
+      - name: Generate padded app icons and splash from official logo
         run: |
           python3 -m pip install --quiet Pillow
           python3 - <<'PY'
           from PIL import Image
           from pathlib import Path
+
           source = Path("assets/LOGO_UPLOAD_HERE/logo.png")
           if not source.is_file():
               raise SystemExit("Official logo missing: assets/LOGO_UPLOAD_HERE/logo.png")
-          logo = Image.open(source).convert("RGBA")
-          if logo.width < 128 or logo.height < 128:
+
+          original = Image.open(source).convert("RGBA")
+          if original.width < 128 or original.height < 128:
               raise SystemExit("Official logo image is unexpectedly small")
-          logo = logo.resize((1024, 1024), Image.Resampling.LANCZOS)
-          Path("assets").mkdir(exist_ok=True)
-          logo.convert("RGB").save("assets/icon.png", quality=95)
-          logo.save("assets/adaptive-icon.png")
-          logo.save("assets/splash-icon.png")
-          logo.convert("RGB").save("assets/splash.png", quality=95)
+
+          def contained(size):
+              image = original.copy()
+              image.thumbnail((size, size), Image.Resampling.LANCZOS)
+              canvas = Image.new("RGBA", (1024, 1024), (0, 0, 0, 0))
+              canvas.alpha_composite(image, ((1024 - image.width) // 2, (1024 - image.height) // 2))
+              return canvas
+
+          assets = Path("assets")
+          assets.mkdir(exist_ok=True)
+
+          # Standard launcher icon: retain the full logo with visible breathing room.
+          icon_bg = Image.new("RGBA", (1024, 1024), "#F8F6F0")
+          icon_bg.alpha_composite(contained(820))
+          icon_bg.convert("RGB").save(assets / "icon.png", optimize=True)
+
+          # Android adaptive foreground must stay inside the central safe zone.
+          contained(640).save(assets / "adaptive-icon.png", optimize=True)
+
+          # Splash uses contain as well, so no letters are clipped at the edges.
+          contained(800).save(assets / "splash-icon.png", optimize=True)
           PY
       - name: Generate optimized Android project
         run: npx expo prebuild --platform android --clean
