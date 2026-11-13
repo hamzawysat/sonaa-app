@@ -1,7 +1,7 @@
 name: Build APK Final
 on:
   push:
-    branches: [ main, 'feature/sync-web-updates-20261103' ]
+    branches: [ main, 'feature/sync-web-updates-20261103', 'fix/client-app-catalog-first-load' ]
     paths:
       - 'App.js'
       - 'src/**'
@@ -40,12 +40,28 @@ jobs:
           logo = Image.open(source).convert("RGBA")
           if logo.width < 128 or logo.height < 128:
               raise SystemExit("Official logo image is unexpectedly small")
-          logo = logo.resize((1024, 1024), Image.Resampling.LANCZOS)
-          logo.convert("RGB").save("assets/icon.png", quality=95)
-          logo.save("assets/adaptive-icon.png")
-          logo.save("assets/splash-icon.png")
-          logo.convert("RGB").save("assets/splash.png", quality=95)
+          # Keep the complete HS mark inside Android's adaptive-icon safe zone.
+          # A transparent 1024px canvas with a 620px contained logo prevents edge clipping.
+          logo.thumbnail((620, 620), Image.Resampling.LANCZOS)
+          foreground = Image.new("RGBA", (1024, 1024), (0, 0, 0, 0))
+          x = (1024 - logo.width) // 2
+          y = (1024 - logo.height) // 2
+          foreground.alpha_composite(logo, (x, y))
+          foreground.save("assets/icon.png")
+          foreground.save("assets/adaptive-icon.png")
+
+          # Splash artwork gets a little more room but remains fully contained.
+          splash_logo = Image.open(source).convert("RGBA")
+          splash_logo.thumbnail((720, 720), Image.Resampling.LANCZOS)
+          splash = Image.new("RGBA", (1024, 1024), (244, 248, 252, 255))
+          sx = (1024 - splash_logo.width) // 2
+          sy = (1024 - splash_logo.height) // 2
+          splash.alpha_composite(splash_logo, (sx, sy))
+          splash.save("assets/splash-icon.png")
+          splash.convert("RGB").save("assets/splash.png", quality=95)
           PY
+      - name: Run regression tests
+        run: npm test
       - name: Prebuild Android
         run: npx expo prebuild --platform android --clean
       - name: Build Release APK
