@@ -557,3 +557,19 @@ test('client catalog requests retry transient failures and load services and are
   assert.match(screens, /if \(areaResponse\.status === 'fulfilled'[\s\S]*?setAreas\(areaResponse\.value\.areas\.filter/);
   assert.ok(!screens.includes('if (serviceResponse.status !== \'fulfilled\') throw serviceResponse.reason'), 'a services failure must not prevent saving successfully loaded areas');
 });
+
+
+test('Android branding uses Hamzawy Sat and preserves the existing application id', () => {
+  const config = JSON.parse(fs.readFileSync(path.join(root, 'app.json'), 'utf8'));
+  assert.equal(config.expo.name, 'Hamzawy Sat');
+  assert.equal(config.expo.slug, 'hamzawy-sat');
+  assert.equal(config.expo.android.package, 'com.sonaa.app');
+});
+
+test('Android launcher icon generation keeps the full logo inside safe transparent margins', () => {
+  const workflow = fs.readFileSync(path.join(root, '.github/workflows/build.yml'), 'utf8');
+  assert.match(workflow, /logo\.thumbnail\(\(620, 620\)/);
+  assert.match(workflow, /Image\.new\("RGBA", \(1024, 1024\), \(0, 0, 0, 0\)\)/);
+  assert.match(workflow, /foreground\.alpha_composite\(logo, \(x, y\)\)/);
+  assert.match(workflow, /run: npm test/);
+});
