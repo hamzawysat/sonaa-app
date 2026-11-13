@@ -535,11 +535,25 @@ test('client area selection hides the search field, reveals the detailed address
   assert.match(picker, /\(multiple \|\| !selected\.length\) \? <TextInput/);
   assert.ok(client.includes('technicianCounts={areaTechnicianCounts}'));
   assert.ok(client.includes('{form.area ? <Field inputRef={clientAddressInputRef} label="العنوان بالتفصيل *"'));
-  assert.ok(screens.includes('setAreaTechnicianCounts(areaResponse.status'));
+  assert.match(screens, /requestCatalogWithRetry\('\/services'\)/);
+  assert.match(screens, /requestCatalogWithRetry\('\/areas'\)/);
+  assert.match(screens, /if \(serviceResponse\.status === 'fulfilled'/);
+  assert.match(screens, /if \(areaResponse\.status === 'fulfilled' && Array\.isArray\(areaResponse\.value\?\.areas\)\)/);
   assert.ok(screens.includes('areaTechnicianCounts, setAreaTechnicianCounts,'));
 });
 
 test('technician dashboard opens on the opportunities tab by default', () => {
   const state = fs.readFileSync(path.join(root, 'src/hooks/useAppState.js'), 'utf8');
   assert.match(state, /tab: 'available'/);
+});
+
+
+test('client catalog requests retry transient failures and load services and areas independently', () => {
+  const screens = fs.readFileSync(path.join(root, 'src/screens/AppScreens.js'), 'utf8');
+  assert.match(screens, /async function requestCatalogWithRetry\(path, attempts = 3\)/);
+  assert.match(screens, /const retryable = !status \|\| status === 408 \|\| status === 429 \|\| status >= 500/);
+  assert.match(screens, /Promise\.allSettled\(\[[\s\S]*?requestCatalogWithRetry\('\/services'\),[\s\S]*?requestCatalogWithRetry\('\/areas'\)/);
+  assert.match(screens, /if \(serviceResponse\.status === 'fulfilled'[\s\S]*?setCategories\(serviceCategories\)/);
+  assert.match(screens, /if \(areaResponse\.status === 'fulfilled'[\s\S]*?setAreas\(areaResponse\.value\.areas\.filter/);
+  assert.ok(!screens.includes('if (serviceResponse.status !== \'fulfilled\') throw serviceResponse.reason'), 'a services failure must not prevent saving successfully loaded areas');
 });
