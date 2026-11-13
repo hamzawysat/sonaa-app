@@ -567,11 +567,13 @@ test('Hamzawy Sat client and technician refresh controls use black-and-gold bran
 
 test('catalog loading retries temporary errors and keeps services and areas independent', () => {
   const screens = fs.readFileSync(path.join(root, 'src/screens/AppScreens.js'), 'utf8');
-  assert.match(screens, /async function requestCatalogWithRetry\\(path, attempts = 3\\)/);
-  assert.match(screens, /timeoutMs: 20000/);
-  assert.match(screens, /status === 408 \\|\\| status === 429 \\|\\| status >= 500/);
-  assert.match(screens, /Promise\\.allSettled\\(\\[[\\s\\S]*?requestCatalogWithRetry\\('\/services'\\),[\\s\\S]*?requestCatalogWithRetry\\('\/areas'\\)/);
-  assert.match(screens, /if \\(serviceResponse\\.status === 'fulfilled'[\\s\\S]*?setCategories\\(serviceCategories\\)/);
-  assert.match(screens, /if \\(areaResponse\\.status === 'fulfilled'[\\s\\S]*?setAreas\\(areaResponse\\.value\\.areas\\.filter/);
+  assert.ok(screens.includes('async function requestCatalogWithRetry(path, attempts = 3)'));
+  assert.ok(screens.includes('timeoutMs: 20000'));
+  assert.ok(screens.includes('status === 408 || status === 429 || status >= 500'));
+  assert.ok(screens.includes("requestCatalogWithRetry('/services')"));
+  assert.ok(screens.includes("requestCatalogWithRetry('/areas')"));
+  assert.ok(screens.includes('Promise.allSettled(['));
+  assert.ok(screens.includes('setCategories(serviceCategories)'));
+  assert.ok(screens.includes('setAreas(areaResponse.value.areas.filter'));
   assert.ok(!screens.includes("if (serviceResponse.status !== 'fulfilled') throw serviceResponse.reason"));
 });
