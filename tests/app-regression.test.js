@@ -542,7 +542,7 @@ test('client area selection hides the search field, reveals the detailed address
   assert.match(picker, /\(multiple \|\| !selected\.length\) \? <TextInput/);
   assert.ok(client.includes('technicianCounts={areaTechnicianCounts}'));
   assert.ok(client.includes('{form.area ? <Field inputRef={clientAddressInputRef} label="العنوان بالتفصيل *"'));
-  assert.ok(screens.includes('setAreaTechnicianCounts(areaResponse.status'));
+  assert.ok(screens.includes('setAreaTechnicianCounts('));
   assert.ok(screens.includes('areaTechnicianCounts, setAreaTechnicianCounts,'));
 });
 
@@ -562,4 +562,16 @@ test('Hamzawy Sat client and technician refresh controls use black-and-gold bran
   assert.ok(startup.includes("backgroundColor: '#F8F6F0'"), 'startup error screen must use the Hamzawy Sat cream background');
   assert.ok(startup.includes("backgroundColor: '#A9822E'"), 'startup retry button must use the gold brand');
   assert.ok(!startup.includes('#F5F7FF') && !startup.includes('#172554'), 'legacy blue startup colors must be absent');
+});
+
+
+test('catalog loading retries temporary errors and keeps services and areas independent', () => {
+  const screens = fs.readFileSync(path.join(root, 'src/screens/AppScreens.js'), 'utf8');
+  assert.match(screens, /async function requestCatalogWithRetry\\(path, attempts = 3\\)/);
+  assert.match(screens, /timeoutMs: 20000/);
+  assert.match(screens, /status === 408 \\|\\| status === 429 \\|\\| status >= 500/);
+  assert.match(screens, /Promise\\.allSettled\\(\\[[\\s\\S]*?requestCatalogWithRetry\\('\/services'\\),[\\s\\S]*?requestCatalogWithRetry\\('\/areas'\\)/);
+  assert.match(screens, /if \\(serviceResponse\\.status === 'fulfilled'[\\s\\S]*?setCategories\\(serviceCategories\\)/);
+  assert.match(screens, /if \\(areaResponse\\.status === 'fulfilled'[\\s\\S]*?setAreas\\(areaResponse\\.value\\.areas\\.filter/);
+  assert.ok(!screens.includes("if (serviceResponse.status !== 'fulfilled') throw serviceResponse.reason"));
 });
