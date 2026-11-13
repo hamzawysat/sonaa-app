@@ -213,22 +213,56 @@ function AppScreens({ onScreenChange, onAuthRestoringChange }) {
   useEffect(() => {
     if (!['client', 'technician', 'admin', 'clientRegister', 'technicianRegister', 'profileEdit'].includes(screen)) return;
     let mounted = true;
+    async function requestCatalogWithRetry(path, attempts = 3) {
+      let lastError;
+      for (let attempt = 0; attempt < attempts; attempt += 1) {
+        try {
+          return await api(path, { timeoutMs: 20000 });
+        } catch (error) {
+          lastError = error;
+          const status = Number(error?.status || 0);
+          const retryable = !status || status === 408 || status === 429 || status >= 500;
+          if (!retryable || attempt === attempts - 1) throw error;
+          await new Promise(resolve => setTimeout(resolve, attempt === 0 ? 700 : 1400));
+        }
+      }
+      throw lastError;
+    }
     async function loadPublicData() {
-      setServicesLoading(true); setServicesError('');
+      setServicesLoading(true);
+      setServicesError('');
       try {
-        const [serviceResponse, areaResponse] = await Promise.allSettled([api('/services'), api('/areas')]);
-        if (serviceResponse.status !== 'fulfilled') throw serviceResponse.reason;
-        const serviceResult = serviceResponse.value;
-        if (!Array.isArray(serviceResult.categories) || serviceResult.categories.length === 0) throw new Error('قائمة الخدمات من الخادم غير متاحة حاليًا');
+        const [serviceResponse, areaResponse] = await Promise.allSettled([
+          requestCatalogWithRetry('/services'),
+          requestCatalogWithRetry('/areas'),
+        ]);
         if (!mounted) return;
-        setAreas(areaResponse.status === 'fulfilled' && Array.isArray(areaResponse.value?.areas) ? areaResponse.value.areas.filter(area => !isReservedAreaLabel(area)) : []);
-        setAreaTechnicianCounts(areaResponse.status === 'fulfilled' && areaResponse.value?.technicianCountByArea && typeof areaResponse.value.technicianCountByArea === 'object' ? areaResponse.value.technicianCountByArea : {});
-        setCategories(serviceResult.categories);
-        setSelected(current => current && serviceResult.categories.some(item => item.label === current.label)
-          ? serviceResult.categories.find(item => item.label === current.label) : null);
-      } catch (err) {
-        if (mounted) { setServicesError(err.message || 'تعذر تحميل الخدمات'); setCategories([]); }
-      } finally { if (mounted) setServicesLoading(false); }
+
+        if (serviceResponse.status === 'fulfilled'
+          && Array.isArray(serviceResponse.value?.categories)
+          && serviceResponse.value.categories.length > 0) {
+          const serviceCategories = serviceResponse.value.categories;
+          setCategories(serviceCategories);
+          setSelected(current => current && serviceCategories.some(item => item.label === current.label)
+            ? serviceCategories.find(item => item.label === current.label) : null);
+        } else {
+          const serviceError = serviceResponse.status === 'rejected'
+            ? serviceResponse.reason
+            : new Error('قائمة الخدمات من الخادم غير متاحة حاليًا');
+          setServicesError(serviceError?.message || 'تعذر تحميل الخدمات');
+        }
+
+        if (areaResponse.status === 'fulfilled' && Array.isArray(areaResponse.value?.areas)) {
+          setAreas(areaResponse.value.areas.filter(area => !isReservedAreaLabel(area)));
+          setAreaTechnicianCounts(
+            areaResponse.value.technicianCountByArea && typeof areaResponse.value.technicianCountByArea === 'object'
+              ? areaResponse.value.technicianCountByArea
+              : {}
+          );
+        }
+      } finally {
+        if (mounted) setServicesLoading(false);
+      }
     }
     loadPublicData();
     return () => { mounted = false; };
