@@ -1652,6 +1652,13 @@ function AppScreens({ onScreenChange, onAuthRestoringChange }) {
 
   async function performLogout() {
     const activeSession = session;
+    if (activeSession && ['client', 'fanni'].includes(activeSession.role)) {
+      try {
+        await api('/' + activeSession.role + '/logout', {
+          method: 'POST', token: activeSession.token, timeoutMs: 5000
+        });
+      } catch (_) {}
+    }
     const pushToken = pushTokenRef.current;
     if (activeSession && pushToken && ['client', 'fanni', 'admin'].includes(activeSession.role)) {
       try {
